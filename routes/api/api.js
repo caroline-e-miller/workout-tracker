@@ -13,8 +13,8 @@ router.post("/workout", ({ body }, res) => {
 });
 
 // put new exerices into workout
-router.post("/workout/bulk", ({ body }, res) => {
-    Workout.insertMany(body)
+router.put("/workout:id", ({ body }, res) => {
+    Workout.insert(body)
         .then(dbWorkout => {
             res.json(dbWorkout);
         })
