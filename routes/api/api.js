@@ -2,10 +2,10 @@ const router = require("express").Router();
 const Workout = require("../../models/workout.js");
 
 // create new workout
-router.post("/api/workout", ({ body }, res) => {
+router.post("/workout", ({ body }, res) => {
     Workout.create(body)
-        .then(dbTransaction => {
-            res.json(dbTransaction);
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.status(400).json(err);
@@ -13,22 +13,33 @@ router.post("/api/workout", ({ body }, res) => {
 });
 
 // put new exerices into workout
-router.post("/api/workout/bulk", ({ body }, res) => {
+router.post("/workout/bulk", ({ body }, res) => {
     Workout.insertMany(body)
-        .then(dbTransaction => {
-            res.json(dbTransaction);
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.status(400).json(err);
         });
 });
 
-// view workout weight
-router.get("/api/workout", (req, res) => {
+// view all workouts
+router.get("/workout", (req, res) => {
     Workout.find({})
-        .sort({ date: -1 })
-        .then(dbTransaction => {
-            res.json(dbTransaction);
+        .then(dbWorkout => {
+            res.json(dbWorkout);
+        })
+        .catch(err => {
+            res.status(400).json(err);
+        });
+});
+
+// view workout weights
+router.get("/workout", (req, res) => {
+    Workout.find({})
+        .sort({ weight: `${weight}` })
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.status(400).json(err);
@@ -36,11 +47,11 @@ router.get("/api/workout", (req, res) => {
 });
 
 // view workout duration
-router.get("/api/workout", (req, res) => {
+router.get("/workout", (req, res) => {
     Workout.find({})
-        .sort({ date: -1 })
-        .then(dbTransaction => {
-            res.json(dbTransaction);
+        .sort({ duration: `${duration}` })
+        .then(dbWorkout => {
+            res.json(dbWorkout);
         })
         .catch(err => {
             res.status(400).json(err);
