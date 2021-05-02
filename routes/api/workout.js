@@ -15,14 +15,24 @@ router.post("/workouts", ({ body }, res) => {
 
 // PUT: /api/workouts/:id
 // put new exerices into workout
-router.put("/workouts/:id", ({ body }, res) => {
-    Workout.collection.insert(body)
-        .then(dbWorkout => {
-            res.json(dbWorkout);
-        })
-        .catch(err => {
-            res.status(400).json(err);
-        });
+router.put("/workouts/:id", (req, res) => {
+    Workout.findByIdAndUpdate(
+        {
+            _id: req.params.id
+        },
+        {
+            $push: {
+                exercises: req.body
+            }
+        },
+        (error, data) => {
+            if (error) {
+                res.send(error);
+            } else {
+                res.send(data);
+            }
+        }
+    );
 });
 
 // GET: /api/workout/range
@@ -64,6 +74,22 @@ router.get("/workouts", ({ body }, res) => {
         .catch((err) => {
             res.json(err);
         });
+});
+
+// get one workout
+router.get("/workouts/:id", (req, res) => {
+    Workout.findOne(
+        {
+            _id: req.params.id
+        },
+        (error, data) => {
+            if (error) {
+                res.send(error);
+            } else {
+                res.send(data);
+            }
+        }
+    );
 });
 
 // GET: /api/workout
