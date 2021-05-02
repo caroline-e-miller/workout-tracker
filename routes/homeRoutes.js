@@ -11,7 +11,7 @@ router.get('/exercise', async (req, res) => {
 
 router.get('/stats', async (req, res) => {
     try {
-        res.sendFile(path.join(__dirName, '../public/stats.html'))
+        res.sendFile(path.join(__dirname, '../public/stats.html'));
     } catch (error) {
         res.status(400);
     }
